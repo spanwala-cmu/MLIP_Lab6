@@ -15,24 +15,20 @@ pipeline {
                 sh '''#!/bin/bash
                 echo 'Test Step: We run testing tool like pytest here'
 
-                # TODO fill out the path to conda here
-                source /home/team14/miniconda3/etc/profile.d/conda.sh
+                # Initialize conda
+                sudo /home/team14/miniconda3/bin/conda init bash
+                source ~/.bashrc
 
-                # TODO Complete the command to run pytest
-                conda activate mlip
+                # Run pytest in the mlip environment
+                sudo /home/team14/miniconda3/bin/conda run -n mlip pytest
 
-                # Run pytest
-                pytest
-
-                echo 'pytest not runned'
-                exit 1 #comment this line after implementing Jenkinsfile
+                echo 'pytest executed'
                 '''
-
             }
         }
         stage('Deploy') {
             steps {
-                echo 'In this step, we deploy our porject'
+                echo 'In this step, we deploy our project'
                 echo 'Depending on the context, we may publish the project artifact or upload pickle files'
             }
         }
