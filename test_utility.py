@@ -37,5 +37,23 @@ def feature_target_sample(housing_data_sample):
 
 def test_data_split(feature_target_sample):
     return_tuple = data_split(*feature_target_sample)
-    # TODO test if the length of return_tuple is 4
-    raise NotImplemented
+    
+    # Test if the length of return_tuple is 4
+    assert len(return_tuple) == 4, "data_split should return a tuple of 4 elements"
+    
+    # Additional tests to ensure the correct structure of the returned data
+    X_train, X_test, y_train, y_test = return_tuple
+    
+    # Test if the returned elements are of the correct type
+    assert isinstance(X_train, pd.DataFrame), "X_train should be a pandas DataFrame"
+    assert isinstance(X_test, pd.DataFrame), "X_test should be a pandas DataFrame"
+    assert isinstance(y_train, pd.Series), "y_train should be a pandas Series"
+    assert isinstance(y_test, pd.Series), "y_test should be a pandas Series"
+    
+    # Test if the shapes of the returned elements are consistent
+    assert X_train.shape[0] == y_train.shape[0], "X_train and y_train should have the same number of samples"
+    assert X_test.shape[0] == y_test.shape[0], "X_test and y_test should have the same number of samples"
+    
+    # Test if the total number of samples is preserved
+    total_samples = len(feature_target_sample[0])
+    assert X_train.shape[0] + X_test.shape[0] == total_samples, "The sum of train and test samples should equal the total number of samples"
